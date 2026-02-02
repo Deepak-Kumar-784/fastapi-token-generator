@@ -1,0 +1,78 @@
+body {
+  background: #04364a; /* Deep Blue */
+  color: black; /* Lightest Blue */
+  font-weight: bold;
+  font-family: "Segoe UI", Arial, sans-serif;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+.container {
+  margin-top: 40px;
+}
+.rocket {
+  width: 180px;
+  margin: 30px auto;
+  display: block;
+}
+.quote {
+  font-size: 1.6em;
+  margin-bottom: 30px;
+  color: black;
+  text-shadow:
+    0 0 16px #132440,
+    0 0 32px #132440;
+}
+h1 {
+  font-size: 3.5em;
+  margin-bottom: 10px;
+  letter-spacing: 1px;
+  color: #132440;
+  text-shadow:
+    0 0 16px #132440,
+    0 0 32px #132440;
+  -webkit-text-stroke: 2px black;
+}
+h2 {
+  font-size: 2.2em;
+  margin-top: 40px;
+  color: #132440;
+  text-shadow:
+    0 0 16px #132440,
+    0 0 32px #132440;
+  -webkit-text-stroke: 2px black;
+  font-weight: bold;
+  letter-spacing: 2px;
+  border: 2px solid #000;
+  border-radius: 12px;
+  padding: 18px 10px 20px 10px;
+  background: rgba(0, 0, 0, 0.08);
+  display: inline-block;
+  box-shadow: 4px 6px 12px rgba(0, 0, 0, 0.3);
+}
+.api {
+  margin-top: 30px;
+  font-size: 1.3em;
+}
+.api a {
+  color: blue; /* Accent Cyan */
+  text-decoration: underline;
+}
+.buttons {
+  margin-top: 30px;
+}
+.btn {
+  background: #176b87; /* Medium Blue */
+  color: #dafffb; /* Lightest Blue */
+  border: none;
+  padding: 12px 32px;
+  margin: 0 10px;
+  font-size: 1.1em;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn:hover {
+  background: #64ccc5; /* Accent Cyan */
+  color: #04364a; /* Deep Blue */
+}
