@@ -371,6 +371,47 @@ pip install -r requirements.txt
 
 Make sure your virtual environment is activated before running the application.
 
+## CI/CD with GitHub Actions
+
+This project includes automated testing with GitHub Actions. On every push to `master` or `main` branch:
+
+1. **Automated Tests**: Runs all test cases with pytest
+2. **Code Coverage**: Generates coverage report
+3. **Code Quality**: Lints code with flake8
+
+View workflow status in the "Actions" tab on GitHub after pushing.
+
+## Deployment
+
+### Deploy to Render (Free)
+
+1. Push your code to GitHub
+2. Go to [render.com](https://render.com) and sign up
+3. Click "New +" → "Web Service"
+4. Connect your GitHub repository
+5. Configure:
+   - **Build Command**: `pip install -r requirements.txt`
+   - **Start Command**: `uvicorn main:app --host 0.0.0.0 --port $PORT`
+6. Add environment variables from `.env.example`
+7. Click "Create Web Service"
+
+### Deploy to Railway (Free)
+
+1. Push your code to GitHub
+2. Go to [railway.app](https://railway.app) and sign up
+3. Click "New Project" → "Deploy from GitHub repo"
+4. Select your repository
+5. Add environment variables from `.env.example`
+6. Railway auto-detects and deploys your FastAPI app
+
+### Deploy to Heroku
+
+1. Install Heroku CLI
+2. Login: `heroku login`
+3. Create app: `heroku create your-app-name`
+4. Set environment variables: `heroku config:set PARTICIPANT_NAME=Deepak`
+5. Deploy: `git push heroku master`
+
 ## Contributing
 
 Feel free to submit issues, fork the repository, and create pull requests for any improvements.
