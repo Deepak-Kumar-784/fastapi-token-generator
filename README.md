@@ -1,7 +1,7 @@
 # Token Generation API
 
-**Author:** Deepak  
-**Date:** February 2, 2026  
+**Author:** Deepak
+**Date:** February 2, 2026
 **Version:** 1.0.0
 
 ## Overview
@@ -337,9 +337,7 @@ The API provides appropriate HTTP status codes and error messages:
    ```
 
 2. **Check API documentation at** http://localhost:8000/docs for interactive testing
-
 3. **View logs in the terminal** where uvicorn is running
-
 4. **Test endpoints using the Swagger UI** before writing integration code
 
 ## Production Deployment
@@ -359,9 +357,7 @@ For production deployment, consider:
    ```
 
 3. **Use a process manager** like systemd, supervisor, or PM2
-
 4. **Set up a reverse proxy** (nginx or Apache)
-
 5. **Enable HTTPS** for secure communication
 
 ## Troubleshooting
@@ -443,16 +439,14 @@ Feel free to submit issues, fork the repository, and create pull requests for an
 
 ## License
 
-This project is created as part of an Accenture Python task assignment.
+This project is licensed under the MIT License. See the LICENSE file for details.
 
 ## Contact
 
-**Author:** Deepak  
+**Author:** Deepak
 **Date:** February 2, 2026
 
 ---
-
-**Note:** This API is designed for educational and demonstration purposes as part of the Accenture Python task assignment.
 
 ## User Interface and Static Files
 
