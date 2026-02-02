@@ -17,29 +17,47 @@ This is a FastAPI-based REST API that provides endpoints for text tokenization a
 - **Comprehensive Testing**: Full test suite using FastAPI TestClient
 - **Environment Variables**: Secure configuration using .env files
 - **Security Best Practices**: Sensitive data stored in environment variables
+- **Custom UI**: Beautiful HTML/CSS/JS interface for both FastAPI and static site
+- **GitHub Pages Deployment**: Automated deployment of static site
+- **CI/CD Pipeline**: Automated testing, linting, and deployment with GitHub Actions
 
 ## Project Structure
 
 ```
 project-root/
-├── main.py              # Main FastAPI application
-├── test_main.py         # Test cases for all endpoints
-├── requirements.txt     # Python dependencies
-├── .env.example         # Example environment file (do NOT commit .env)
-├── .gitignore           # Git ignore rules
-├── static/              # Static files (images, CSS, JS)
-│   └── images/          # Images for UI
-├── templates/           # HTML templates, CSS, JS for UI
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-└── README.md            # Project documentation
+├── .github/
+│   └── workflows/
+│       └── deploy.yaml         # CI/CD pipeline for GitHub Pages
+├── docs/                       # Static site for GitHub Pages
+│   ├── index.html             # Static homepage
+│   ├── style.css              # Static CSS
+│   ├── script.js              # Static JS
+│   └── images/
+│       └── rocket.png         # Images for static site
+├── templates/                  # FastAPI templates
+│   ├── index.html             # FastAPI homepage
+│   ├── style.css              # FastAPI CSS
+│   └── script.js              # FastAPI JS
+├── static/                     # FastAPI static files
+│   └── images/
+│       └── rocket.png         # Images for FastAPI
+├── main.py                     # Main FastAPI application
+├── test_main.py                # Test cases for all endpoints
+├── requirements.txt            # Python dependencies
+├── requirements-dev.txt        # Development dependencies
+├── .env.example                # Example environment file (do NOT commit .env)
+├── .gitignore                  # Git ignore rules
+├── .stylelintrc.json           # CSS linting configuration
+├── LICENSE                     # MIT License
+└── README.md                   # Project documentation
 ```
 
 **Note:**
 
 - `.env` and any files listed in `.gitignore` are NOT pushed to GitHub.
 - Only `.env.example` is tracked for environment variable reference.
+- The `docs/` folder contains the static site deployed to GitHub Pages.
+- The `templates/` and `static/` folders are used by the FastAPI application.
 
 ## Security Features
 
@@ -384,27 +402,56 @@ Make sure your virtual environment is activated before running the application.
 
 ## CI/CD with GitHub Actions
 
-This project includes automated testing with GitHub Actions. On every push to `master` or `main` branch:
+This project uses a streamlined GitHub Actions workflow (`.github/workflows/deploy.yaml`) that runs on every push to the `main` branch:
 
-1. **Automated Tests**: Runs all test cases with pytest
-2. **Code Coverage**: Generates coverage report
-3. **Code Quality**: Lints code with flake8
+### Workflow Stages:
+
+1. **🚀 CI – Test, Lint, Validate, Build**
+   - Runs all Python tests with pytest
+   - Lints code with flake8 for critical errors
+   - Validates HTML syntax with tidy
+   - Creates a preview artifact (zip of the site)
+
+2. **🌍 Deploy to GitHub Pages**
+   - Automatically deploys the `docs/` folder to GitHub Pages
+   - Only runs on main branch push (not pull requests)
+   - Site accessible at: `https://your-username.github.io/your-repo-name/`
+
+### Key Features:
+
+- **Fast execution**: Optimized workflow with caching
+- **Sequential stages**: Clear, step-by-step execution
+- **Automated deployment**: No manual intervention needed
+- **Preview artifacts**: Download site preview before deployment
 
 View workflow status in the "Actions" tab on GitHub after pushing.
 
-## HTML & CSS Quality Checks
-
-This project uses a separate GitHub Actions workflow to check HTML and CSS quality:
-
-- Lints HTML and CSS for errors and best practices
-- Checks for broken links in the UI
-- Validates HTML and CSS syntax
-
-See `.github/workflows/html-css-checks.yml` for details.
-
 ## Deployment
 
-### Deploy to Render (Free)
+### GitHub Pages (Static Site) - Automated ✅
+
+The static site in the `docs/` folder is automatically deployed to GitHub Pages via GitHub Actions:
+
+1. **Enable GitHub Pages:**
+   - Go to your repository → Settings → Pages
+   - Source: "Deploy from a branch"
+   - Branch: Select `gh-pages` and `/root` folder
+   - Click "Save"
+
+2. **Automatic Deployment:**
+   - Every push to `main` branch triggers the CI/CD workflow
+   - The workflow validates, tests, and deploys automatically
+   - Your site will be live at: `https://your-username.github.io/your-repo-name/`
+
+3. **View Deployment:**
+   - Check the "Actions" tab to see deployment progress
+   - Visit the "Environments" section to see the live URL
+
+### FastAPI Backend Deployment
+
+For deploying the FastAPI backend:
+
+#### Deploy to Render (Free)
 
 1. Push your code to GitHub
 2. Go to [render.com](https://render.com) and sign up
@@ -416,7 +463,7 @@ See `.github/workflows/html-css-checks.yml` for details.
 6. Add environment variables from `.env.example`
 7. Click "Create Web Service"
 
-### Deploy to Railway (Free)
+#### Deploy to Railway (Free)
 
 1. Push your code to GitHub
 2. Go to [railway.app](https://railway.app) and sign up
@@ -424,14 +471,6 @@ See `.github/workflows/html-css-checks.yml` for details.
 4. Select your repository
 5. Add environment variables from `.env.example`
 6. Railway auto-detects and deploys your FastAPI app
-
-### Deploy to Heroku
-
-1. Install Heroku CLI
-2. Login: `heroku login`
-3. Create app: `heroku create your-app-name`
-4. Set environment variables: `heroku config:set PARTICIPANT_NAME=Deepak`
-5. Deploy: `git push heroku master`
 
 ## Contributing
 
@@ -450,14 +489,32 @@ This project is licensed under the MIT License. See the LICENSE file for details
 
 ## User Interface and Static Files
 
-This project includes a custom HTML/CSS homepage UI, served at http://localhost:8000/.
+This project maintains **two separate UI implementations**:
 
-- The UI is built with HTML/CSS/JS in the `templates/` directory.
-- Static files (images, etc.) are served from the `static/` directory.
-- To change the homepage image, replace `static/images/rocket.png` with your own image.
-- All UI colors and effects are managed in `templates/style.css`.
+### 1. FastAPI UI (Local Development)
 
-### Accessing the UI
+- **Location**: `templates/` and `static/` folders
+- **Access**: http://localhost:8000/ (when running FastAPI server)
+- **Purpose**: Dynamic UI served by FastAPI with API integration
+- **Features**:
+  - Links to `/docs` for API documentation
+  - Links to `/generate` endpoint for live testing
+  - Served via Jinja2 templates
 
-- Start the server and open http://localhost:8000/ in your browser to see the custom interface.
-- The "Try it out" button links to the FastAPI docs at `/docs`.
+### 2. GitHub Pages Static Site (Production)
+
+- **Location**: `docs/` folder
+- **Access**: `https://your-username.github.io/your-repo-name/`
+- **Purpose**: Static showcase site deployed automatically
+- **Features**:
+  - Same visual design as FastAPI UI
+  - Standalone HTML/CSS/JS (no server required)
+  - Automatically deployed via GitHub Actions
+
+### Customization
+
+- **Change images**: Replace `rocket.png` in both `static/images/` and `docs/images/`
+- **Update styles**: Modify `style.css` in both `templates/` and `docs/`
+- **Edit content**: Update `index.html` in both locations
+
+**Note**: When updating UI, remember to sync changes between `templates/` and `docs/` folders.
