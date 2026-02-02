@@ -28,3 +28,13 @@ htmlcov/
 # OS
 .DS_Store
 Thumbs.db
+
+# Static and templates
+static/.DS_Store
+static/Thumbs.db
+static/*.tmp
+templates/__pycache__/
+
+# Database (future-proof)
+*.sqlite3
+*.db

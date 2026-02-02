@@ -28,6 +28,8 @@ Python_Task_Accenture/
 ├── .env                 # Environment variables (not in git)
 ├── .env.example         # Example environment file
 ├── .gitignore          # Git ignore rules
+├── static/              # Static files (images, CSS, JS)
+├── templates/           # HTML templates for UI
 └── README.md           # This file
 ```
 
@@ -156,22 +158,26 @@ Once the server is running, you can access:
 
 **GET** `/`
 
-Returns a welcome message with participant information and available endpoints.
+Returns a custom HTML UI, not a JSON welcome message. All API endpoints remain unchanged.
 
 **Response:**
 
-```json
-{
-  "message": "Welcome to the Token Generation API!",
-  "participant": "Deepak",
-  "description": "This API provides endpoints for text tokenization and checksum generation.",
-  "endpoints": {
-    "/": "Welcome message",
-    "/generate": "GET - Generate tokens from query parameter",
-    "/tokenize": "POST - Generate tokens from JSON body",
-    "/checksum": "POST - Generate checksum from text"
-  }
-}
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome to the Token Generation API!</title>
+  </head>
+  <body>
+    <h1>Welcome to the Token Generation API!</h1>
+    <p>
+      This API provides endpoints for text tokenization and checksum generation.
+    </p>
+    <p>Try out the API at <a href="/docs">/docs</a>.</p>
+  </body>
+</html>
 ```
 
 ### 2. Generate Tokens (Query Parameter)
@@ -381,6 +387,16 @@ This project includes automated testing with GitHub Actions. On every push to `m
 
 View workflow status in the "Actions" tab on GitHub after pushing.
 
+## HTML & CSS Quality Checks
+
+This project uses a separate GitHub Actions workflow to check HTML and CSS quality:
+
+- Lints HTML and CSS for errors and best practices
+- Checks for broken links in the UI
+- Validates HTML and CSS syntax
+
+See `.github/workflows/html-css-checks.yml` for details.
+
 ## Deployment
 
 ### Deploy to Render (Free)
@@ -428,3 +444,17 @@ This project is created as part of an Accenture Python task assignment.
 ---
 
 **Note:** This API is designed for educational and demonstration purposes as part of the Accenture Python task assignment.
+
+## User Interface and Static Files
+
+This project includes a custom HTML/CSS homepage UI, served at http://localhost:8000/.
+
+- The UI is built with Jinja2 templates (in `templates/`).
+- Static files (images, CSS, JS) are served from the `static/` directory.
+- To change the homepage image, replace `static/images/rocket.png` with your own image.
+- All UI colors and effects are managed in `templates/style.css`.
+
+### Accessing the UI
+
+- Start the server and open http://localhost:8000/ in your browser to see the custom interface.
+- The "Try it out" button links to the FastAPI docs at `/docs`.
