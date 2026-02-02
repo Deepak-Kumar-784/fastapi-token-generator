@@ -43,6 +43,9 @@ templates = Jinja2Templates(directory="templates")
 # Mount static files for serving images, css, js, etc.
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# Mount templates as static for CSS/JS direct references
+app.mount("/templates", StaticFiles(directory="templates"), name="templates")
+
 
 # Pydantic model for accepting JSON input with text field
 class TextInput(BaseModel):
