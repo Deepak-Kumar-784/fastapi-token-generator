@@ -21,17 +21,25 @@ This is a FastAPI-based REST API that provides endpoints for text tokenization a
 ## Project Structure
 
 ```
-Python_Task_Accenture/
+project-root/
 ├── main.py              # Main FastAPI application
 ├── test_main.py         # Test cases for all endpoints
 ├── requirements.txt     # Python dependencies
-├── .env                 # Environment variables (not in git)
-├── .env.example         # Example environment file
-├── .gitignore          # Git ignore rules
+├── .env.example         # Example environment file (do NOT commit .env)
+├── .gitignore           # Git ignore rules
 ├── static/              # Static files (images, CSS, JS)
-├── templates/           # HTML templates for UI
-└── README.md           # This file
+│   └── images/          # Images for UI
+├── templates/           # HTML templates, CSS, JS for UI
+│   ├── index.html
+│   ├── style.css
+│   └── script.js
+└── README.md            # Project documentation
 ```
+
+**Note:**
+
+- `.env` and any files listed in `.gitignore` are NOT pushed to GitHub.
+- Only `.env.example` is tracked for environment variable reference.
 
 ## Security Features
 
@@ -53,10 +61,11 @@ This project uses `.env` file to store sensitive configuration data:
 
 ## Installation
 
-### 1. Clone or navigate to the project directory
+### 1. Clone the repository
 
 ```bash
-cd c:\Users\Deepak\Desktop\Python_Task_Accenture
+git clone https://github.com/your-username/your-repo-name.git
+cd your-repo-name
 ```
 
 ### 2. Create a virtual environment (recommended)
@@ -105,7 +114,7 @@ Then edit `.env` file and update the values as needed:
 - `PORT`: Server port (default: 8000)
 - `ENVIRONMENT`: Set to `production` for production deployment
 
-**Important:** Never commit the `.env` file to version control!
+**Important:** Never commit the `.env` file to version control! The `.env` file is excluded by `.gitignore`.
 
 ## Running the Application
 
@@ -133,7 +142,7 @@ uvicorn main:app --host 0.0.0.0 --port 8080 --reload
 python main.py
 ```
 
-This will start the server on `http://0.0.0.0:8000`
+This will start the server on `http://0.0.0.0:8000` (or your configured host/port)
 
 ### Method 3: Using Uvicorn with Workers (Production)
 
@@ -449,8 +458,8 @@ This project is created as part of an Accenture Python task assignment.
 
 This project includes a custom HTML/CSS homepage UI, served at http://localhost:8000/.
 
-- The UI is built with Jinja2 templates (in `templates/`).
-- Static files (images, CSS, JS) are served from the `static/` directory.
+- The UI is built with HTML/CSS/JS in the `templates/` directory.
+- Static files (images, etc.) are served from the `static/` directory.
 - To change the homepage image, replace `static/images/rocket.png` with your own image.
 - All UI colors and effects are managed in `templates/style.css`.
 
