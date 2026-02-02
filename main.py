@@ -6,12 +6,15 @@ Date: February 2, 2026
 This API provides endpoints for generating tokens and checksums from text.
 """
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from pydantic import BaseModel, Field
 import hashlib
 from typing import List
 import os
 from dotenv import load_dotenv
+from fastapi.responses import HTMLResponse
+from fastapi.templating import Jinja2Templates
+from fastapi.staticfiles import StaticFiles
 
 # Load environment variables from .env file
 load_dotenv()
@@ -33,6 +36,12 @@ app = FastAPI(
     description=APP_DESCRIPTION,
     version=APP_VERSION,
 )
+
+# Setup Jinja2 templates
+templates = Jinja2Templates(directory="templates")
+
+# Mount static files for serving images, css, js, etc.
+app.mount("/static", StaticFiles(directory="static"), name="static")
 
 
 # Pydantic model for accepting JSON input with text field
@@ -97,7 +106,7 @@ def generate(text: str) -> List[str]:
 
 
 @app.get("/")
-async def welcome():
+async def homepage(request: Request):
     """
     Welcome endpoint with customized message.
 
@@ -106,18 +115,7 @@ async def welcome():
     Returns:
         dict: Welcome message with participant name
     """
-    return {
-        "message": "Welcome to the Token Generation API!",
-        "participant": PARTICIPANT_NAME,
-        "environment": ENVIRONMENT,
-        "description": "This API provides endpoints for text tokenization and checksum generation.",
-        "endpoints": {
-            "/": "Welcome message",
-            "/generate": "GET - Generate tokens from query parameter",
-            "/tokenize": "POST - Generate tokens from JSON body",
-            "/checksum": "POST - Generate checksum from text",
-        },
-    }
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 @app.get("/generate")
@@ -202,6 +200,11 @@ async def generate_checksum(input_data: TextInput):
     checksum = hashlib.md5(input_data.text.encode()).hexdigest()
 
     return ChecksumResponse(checksum=checksum, original_text=input_data.text)
+
+
+@app.get("/", response_class=HTMLResponse)
+async def homepage(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 
 
 # Entry point for running the application
