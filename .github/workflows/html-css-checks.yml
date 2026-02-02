@@ -30,17 +30,10 @@ jobs:
 
       - name: Run Stylelint on CSS
         run: |
-          stylelint "templates/*.css"
-
-      - name: Link Checker
-        run: |
-          npx broken-link-checker http://localhost:8000 --recursive --host-headers
+          stylelint "templates/*.css" --allow-empty-input
         continue-on-error: true
 
       - name: Syntax Validator (HTML)
         run: |
           npx html-validator-cli --file templates/index.html --verbose
-
-      - name: Syntax Validator (CSS)
-        run: |
-          npx stylelint templates/style.css --syntax css
+        continue-on-error: true

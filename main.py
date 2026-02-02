@@ -108,19 +108,6 @@ def generate(text: str) -> List[str]:
     return tokens
 
 
-@app.get("/")
-async def homepage(request: Request):
-    """
-    Welcome endpoint with customized message.
-
-    Returns a personalized greeting message to the user.
-
-    Returns:
-        dict: Welcome message with participant name
-    """
-    return templates.TemplateResponse("index.html", {"request": request})
-
-
 @app.get("/generate")
 async def generate_tokens_from_query(text: str):
     """
@@ -207,7 +194,16 @@ async def generate_checksum(input_data: TextInput):
 
 @app.get("/", response_class=HTMLResponse)
 async def homepage(request: Request):
-    return templates.TemplateResponse("index.html", {"request": request})
+    """
+    Homepage endpoint that returns the custom HTML UI.
+
+    Args:
+        request: FastAPI Request object
+
+    Returns:
+        HTMLResponse: Custom homepage with UI
+    """
+    return templates.TemplateResponse(request=request, name="index.html")
 
 
 # Entry point for running the application

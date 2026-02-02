@@ -19,14 +19,12 @@ class TestWelcomeEndpoint:
     """Test cases for the welcome endpoint"""
 
     def test_welcome_message(self):
-        """Test that the welcome endpoint returns correct message"""
+        """Test that the welcome endpoint returns HTML homepage"""
         response = client.get("/")
         assert response.status_code == 200
-        data = response.json()
-        assert "message" in data
-        assert "participant" in data
-        assert data["participant"] == "Deepak"
-        assert "endpoints" in data
+        assert "text/html" in response.headers["content-type"]
+        assert "Deepak" in response.text
+        assert "Welcome" in response.text
 
 
 class TestGenerateFunction:
